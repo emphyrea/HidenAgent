@@ -21,12 +21,15 @@ public class PlayerChar : MonoBehaviour
     Vector3 moveDir;
     Vector3 aimDir;
 
+    Animator animator;
+
     // Start is called before the first frame update
     private void Awake()
     {
         moveStick.onInputValueChanged += MoveInputUpdated;
         aimStick.onInputValueChanged += AimInputUpdated;
         characterController = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
 
         cam = Camera.main;
     }
@@ -48,6 +51,17 @@ public class PlayerChar : MonoBehaviour
     {
         ProcessMoveInput();
         ProcessAimInput();
+        UpdateAnim();
+    }
+
+    private void UpdateAnim()
+    {
+        float leftSpeed = Vector3.Dot(moveDir, transform.right);
+        float fwdSpeed = Vector3.Dot(moveDir, transform.forward);
+
+        animator.SetFloat("LeftSpeed", leftSpeed);
+        animator.SetFloat("FwdSpeed", fwdSpeed);
+
     }
 
     private void LateUpdate()
