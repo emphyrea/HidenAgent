@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1332559282075517903
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8788066608955314599}
+  m_Layer: 0
+  m_Name: DefaultWeaponSlot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8788066608955314599
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1332559282075517903}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8774633641700088382}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2434220064533922467
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,6 +43,8 @@ GameObject:
   - component: {fileID: 2499826703922367000}
   - component: {fileID: 4022103537949098178}
   - component: {fileID: -9170306760540078366}
+  - component: {fileID: 1199935196577343109}
+  - component: {fileID: 5860555448839055207}
   m_Layer: 0
   m_Name: PlayerChar
   m_TagString: Untagged
@@ -49,9 +82,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveStick: {fileID: 0}
   aimStick: {fileID: 0}
+  uiManager: {fileID: 0}
   moveSpeed: 10
   turnSpeed: 30
+  teamID: 1
   camRig: {fileID: 0}
+  movementComponent: {fileID: 0}
 --- !u!143 &4022103537949098178
 CharacterController:
   m_ObjectHideFlags: 0
@@ -99,6 +135,69 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1199935196577343109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2434220064533922467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee7fd37c45bb0b841b6b0b38ced51216, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialWeaponsPrefabs:
+  - {fileID: 7611894943964504858, guid: 0c65899dfda7a6642bfecbb0c841b6d1, type: 3}
+  weaponSlots: []
+  defaultWeaponSlot: {fileID: 0}
+--- !u!114 &5860555448839055207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2434220064533922467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 821f681c669226d42863d77788225ada, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visual: {fileID: 216678099553447188}
+  defaultColor: {r: 1, g: 1, b: 1, a: 0}
+  damagedColor: {r: 1, g: 0, b: 0, a: 0}
+  colorAttributeName: _Color
+--- !u!1 &6287685187173041479
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7514709829118704498}
+  m_Layer: 0
+  m_Name: RifleSlot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7514709829118704498
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6287685187173041479}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8774633641700088382}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1135085521294348357
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -179,12 +278,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8504309617613441659, guid: 5329596f87a19e443b297a306b9a7624,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8788066608955314599}
+    - targetCorrespondingSourceObject: {fileID: 8504309617613441659, guid: 5329596f87a19e443b297a306b9a7624,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7514709829118704498}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5329596f87a19e443b297a306b9a7624, type: 3}
+--- !u!1 &216678099553447188 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5329596f87a19e443b297a306b9a7624,
+    type: 3}
+  m_PrefabInstance: {fileID: 1135085521294348357}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &597319836381296558 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5329596f87a19e443b297a306b9a7624,
+    type: 3}
+  m_PrefabInstance: {fileID: 1135085521294348357}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8774633641700088382 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8504309617613441659, guid: 5329596f87a19e443b297a306b9a7624,
     type: 3}
   m_PrefabInstance: {fileID: 1135085521294348357}
   m_PrefabAsset: {fileID: 0}

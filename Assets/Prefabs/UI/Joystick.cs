@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -7,17 +8,28 @@ public class Joystick : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoint
 {
     [SerializeField] RectTransform thumbstick;
     [SerializeField] RectTransform background;
+    [SerializeField] float deadZone = 0.2f;
 
     public delegate void OnInputValueChanged(Vector2 inputVal); //delegate
-    public event OnInputValueChanged onInputValueChanged; //event = things outside cannot evoke it, only subscribe
+    public delegate void OnStickTapped(); //delegate
 
+    public event OnInputValueChanged onInputValueChanged; //event = things outside cannot evoke it, only subscribe
+    public event OnStickTapped onStickTapped;
+
+    bool isDrag = false;
     public void OnDrag(PointerEventData eventData)
     {
+        isDrag = true;
         Vector3 touchPos = eventData.position;
         Vector3 thumbstickLocalOffset = Vector3.ClampMagnitude(touchPos - background.position, background.sizeDelta.x/2f);
 
         thumbstick.localPosition = thumbstickLocalOffset;
-        onInputValueChanged?.Invoke(thumbstickLocalOffset/background.sizeDelta.y * 2f); // ? = null check
+        Vector2 outputVal = thumbstickLocalOffset / background.sizeDelta.y * 2f;
+        if (outputVal.magnitude > deadZone)
+        {
+             onInputValueChanged?.Invoke(outputVal); // ? = null check
+        }
+
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -30,6 +42,11 @@ public class Joystick : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoint
         background.localPosition = Vector2.zero;
         thumbstick.localPosition = Vector2.zero;
         onInputValueChanged?.Invoke(Vector2.zero);
-
+        if(isDrag)
+        {
+            isDrag = false;
+            return;
+        }
+        onStickTapped?.Invoke();
     }
 }
